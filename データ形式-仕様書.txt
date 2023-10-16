@@ -1,0 +1,51 @@
+改行(\n)で行を分割
+|でセルを分割
+<br>でセル内改行といったようにHTMLタグは健在
+末尾に付いた"m,n"で横mマス縦nマスである事を表す
+
+\nという文字列は&rneと表され、|は&vtlと表される
+
+解析するコードは以下
+
+var inputText = "元のテキスト";
+// テキストを行で分割
+const rows = inputText.split('\n');
+
+// HTMLテーブルの開始タグを生成
+let htmlTable = '<table>';
+
+// 各行の処理
+for (const row of rows) {
+  // テキストをセルで分割
+  const cells = row.split('|');
+  htmlTable += '<tr>';
+
+  // 各セルの処理
+  for (let cell of cells) {
+    // "m,n" 形式を解析して colspan と rowspan を取得
+    const colspanMatches = cell.match(/"(\d+),(\d+)"/g);
+    let colspan = 1;
+    let rowspan = 1;
+
+    if (colspanMatches) {
+      const lastMatch = colspanMatches[colspanMatches.length - 1];
+      const matchParts = lastMatch.match(/"(\d+),(\d+)"/);
+      if (matchParts) {
+        colspan = parseInt(matchParts[1]);
+        rowspan = parseInt(matchParts[2]);
+        cell = cell.replace(lastMatch, ''); // 最後の"m,n"形式をセルから削除
+      }
+    }
+
+    // セル内の特殊文字を置換
+    cell = cell
+      .replace(/&rne/g, '\n')
+      .replace(/&vtl/g, '|');
+
+    htmlTable += `<td colspan="${colspan}" rowspan="${rowspan}">${cell}</td>`;
+  }
+  htmlTable += '</tr>';
+}
+
+// HTMLテーブルの終了タグを生成
+htmlTable += '</table>';
