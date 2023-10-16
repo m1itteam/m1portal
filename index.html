@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+	<meta name="author" content="水戸一高情報委員会">
+	<meta name="keyword" content="M1portal">
+	<meta name="description" content="茨城県立水戸第一高等学校のポータルサイトです">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="none">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<title>水戸一ポータル</title>
+	<style>
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    header {
+      position: fixed;
+      width: 100%;
+      background-color: #f0f8ff;
+      top: 0;
+      left: 0;
+      font-family: arial;
+      font-weight: bold;
+      color: #96a5b3;
+      height: 3em;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+    }
+    #header-l {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3em;
+      display: flex;
+      flex-direction: row;
+      z-index: 1;
+      text-decoration: none;
+      text-align: center;
+    }
+    .emblem {
+      height: 2em;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: .5em;
+    }
+    #title {
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: .5em;
+      color: #96a5b3;
+    }
+    .header-r {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 3em;
+      display: flex;
+      flex-direction: row;
+      z-index: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-right: 0;
+    }
+    #megabox {
+      display: none;
+    }
+     .megabox {
+      color: #96a5b3;
+      font-size: 1em;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-right: 1em;
+      z-index: 3;
+    }
+    .megabox-form-base {
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
+      top: -100%;
+      right: 0;
+      transition: .5s all;
+      z-index: 0;
+    }
+     .megabox-form-wrapper {
+      background: #fafafa;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 3%;
+      margin-top: 3em;
+    }
+    .megabox-form {
+      margin: 0;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 100%;
+      min-height: 10em;
+    }
+    .megabox-button {
+      border: none;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-color: #666;
+      font-size: 1em;
+      margin-top: 1em;
+      margin-bottom: 0;
+      color: #fff;
+      height: 2em;
+    }
+    .address {
+      appearance: none;
+      -webkit-appearance: none;
+      height: 4em;
+      background-color: rgba(255, 255, 255, 0.01);
+      color: #5e5e5e;
+      border: none;
+      border-bottom: 1px solid #000;
+      margin-bottom: 0;
+      border-radius: 0;
+      width: 10em;
+    }
+    form {
+      padding: 0 1.5em;
+      display: flex;
+      flex-direction: column;
+    }
+    .megabox-textbox {
+      position: relative;
+      padding: 20px;
+    }
+    .megabox-textbox::before,
+    .megabox-textbox::after {
+      content: '';
+      width: 40px;
+      height: 30px;
+      position: absolute;
+      display: inline-block;
+    }
+    .megabox-textbox::before {
+      border-left: solid 1px #5e5e5e;
+      border-top: solid 1px #5e5e5e;
+      top: 0;
+      left: 0;
+    }
+    .megabox-textbox::after {
+      border-right: solid 1px #5e5e5e;
+      border-bottom: solid 1px #5e5e5e;
+      bottom: 0;
+      right: 0;
+    }
+    .megabox-options {
+      margin-left: auto;
+      margin-right: auto;
+      width: 22em;
+      display: flex;
+      justify-content: space-between;
+    }
+    #megabox:checked~.megabox-form-base {
+      top: 3em;
+    }
+    .login{
+      height: 3em;
+      z-index: 3;
+    }
+    .login-text {
+      line-height: 3em;
+      margin-top: auto;
+      margin-right: 5.5em;
+      margin-bottom: auto;
+      color: #96a5b3;
+    }
+    .loginicon {
+      position: fixed;
+      top: 0;
+      right: 0;
+      margin-top: .5em;
+      margin-right: 3em;
+      height: 2em;
+      width: 2em;
+    }
+    #form-basic {
+      position: fixed;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.5);
+      top: -100%;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      transition: .5s all;
+    }
+    .form-wrapper {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0 auto;
+      font-weight: bold;
+      color: #96a5b3;
+      background: #fafafa;
+      padding: 1em;
+      width: 22em;
+      text-align: center;
+      margin-top: 3em;
+    }
+    .form {
+      margin: 0;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      min-height: 3em;
+      border-bottom: 2px solid #000;
+    }
+    .button {
+      border: none;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-color: #666;
+      width: fit-content;
+      padding: 1em;
+      margin-left: auto;
+      margin-top: 1em;
+      margin-right: auto;
+      color: #fff;
+    }
+    #login:checked~#form-basic {
+      top: 3em;
+    }
+    .menulabel {
+      height: 3em;
+      width: 3em;
+      z-index: 3;
+    }
+    #login,
+    #menu {
+      display: none;
+    }
+    .menulabel {
+      position: fixed;
+      display: flex;
+      top: 0;
+      right: 0;
+      justify-content: center;
+      align-items: center;
+    }
+    .menulabel span,
+    .menulabel span:before,
+    .menulabel span:after {
+      content: '';
+      height: .1em;
+      width: 1.5em;
+      border-radius: .1em;
+      background-color: #96a5b3;
+      position: absolute;
+    }
+    .menulabel span:before {
+      right: 0;
+      bottom: .5em;
+    }
+    .menulabel span:after {
+      right: 0;
+      top: .5em;
+    }
+    .menu-content {
+      position: fixed;
+      margin-top: 3em;
+      padding-top: 1em;
+      bottom: 0;
+      top: 0;
+      height: 100%;
+      right: -100%;
+      transition: .5s all;
+      padding-right: 1em;
+      color: #96a5b3;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 2;
+      overflow-y: scroll;
+    }
+    .menu-wrap {
+      padding-bottom: 4em;
+    }
+    .menu-wrap ul li {
+      border-bottom: solid 1px #96a5b3;
+      list-style: none;
+      left: 0;
+    }
+    .menu-wrap ul li a {
+      display: block;
+      width: 100%;
+      font-size: 1em;
+      box-sizing: border-box;
+      color: #96a5b3;
+      text-decoration: none;
+      padding: 9px 15px 10px 0;
+      position: relative;
+    }
+    #menu:checked~.menu-content {
+      right: 0;
+    }
+    .search-bar {
+      display: flex;
+      right: 0;
+      bottom: 0;
+      align-content: center;
+      vertical-align: middle;
+      flex-direction: column;
+      text-align: center;
+    }
+    #search-box {
+      position: absolute;
+      border: none;
+      background: none;
+      font-size: 1em;
+      outline: none;
+      border-bottom: solid 1px #96a5b3;
+      border-radius: 0px;
+      right: 1em;
+      width: 8.5em;
+    }
+    #search-button {
+      border: none;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-color: #96a5b3;
+      padding: .5em;
+      margin-left: auto;
+      margin-top: 3em;
+      color: #fff;
+      margin-right: 2.5em;
+    }
+    .content{
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin-top: 3em;
+      height: auto;
+      width: 100%;
+      bottom: 0;
+      overflow: scroll;
+    }
+    .timetable{
+      position: relative;
+      padding: 0.5em 1em;
+      border: solid 3px #cfd5e8;
+      border-radius: 8px;
+      width: 80%;
+      align-items: center;
+      margin: 1em auto;
+      z-index: 0;
+    }
+    .timetable .box-title{
+      position: absolute;
+      display: inline-block;
+      top: -13px;
+      left: 10px;
+      padding: 0 9px;
+      line-height: 1;
+      font-size: 19px;
+      background: #FFF;
+      color: #96a5b3;
+      font-weight: bold;
+    }
+    .timetableImg{
+      color: #96a5b3;
+      width: 100%;
+    }
+    .news {
+      position: relative;
+      padding: 0.5em 1em;
+      border: solid 3px #cfd5e8;
+      border-radius: 8px;
+      width: 80%;
+      left: 0;
+      margin: 1em auto;
+      z-index: 0;
+    }
+    .news .box-title {
+      position: absolute;
+      display: inline-block;
+      top: -13px;
+      left: 10px;
+      padding: 0 9px;
+      line-height: 1;
+      font-size: 19px;
+      background: #FFF;
+      color: #96a5b3;
+      font-weight: bold;
+    }
+    .news table {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      color: #cfd5e8;
+    }
+    .news table tr td:nth-of-type(1){
+      text-align: left;
+      width: 8em;
+      color: #96a5b3;
+    }
+    .news table tr td a{
+      text-decoration: none;
+      color: #96a5b3;
+    }
+    footer {
+      position: absolute;
+      background-color: #f0f8ff;
+      width: 100%;
+      margin-top: 1em;
+    }
+    footer table {
+      font-family: Arial, Helvetica, sans-serif;
+      width: 100%;
+      margin-top: -1.5em;
+      margin-bottom: 1em;
+    }
+    .main {
+      font-weight: bold;
+    }
+    footer table tr td ul {
+      list-style: none;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      padding-top: 3em;
+    }
+    footer table tr td ul li {
+      text-align: center;
+      padding: auto;
+      position: relative;
+      left: -1em;
+    }
+    footer table tr td ul li a {
+      text-decoration: none;
+      color: #96a5b3;
+    }
+    #formurl {
+      display: flex;
+      text-decoration: none;
+      color: #96a5b3;
+      margin-left: 2em;
+    }
+    footer span p {
+      color: #96a5b3;
+      font-size: .5em;
+      margin-right: 2em;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="https://m1portal.cloudfree.jp" id="header-l">
+      <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" stroke-linecap="round" stroke-linejoin="round"
+        stroke-miterlimit="10" clip-rule="evenodd" viewBox="0 0 401 248" class="emblem">
+        <path fill="#96a5b3"
+          d="m0 1 99 122h50M0 248l99-124h50M200 1l-40 78 25 45-25 44 40 79V1Zm25 103-11 20 11 20 24-20-24-20ZM399 1 240 79l-14 24 25 21L399 1ZM251 124l-26 21 14 24 161 78-149-123Z" />
+        <path fill="none" stroke="#96a5b3" stroke-linecap="butt"
+          d="m175 104-25 20 25 20m-15-65L0 1m160 167L0 248M240 79 200 1m40 167-40 79m200 0L300 124h-49 49L399 1" />
+      </svg>
+      <p id="title">水戸一ポータル</p>
+    </a>
+    <span class="header-r">
+      <label for="megabox" class="megabox">目安箱</label>
+      <input type="checkbox" id="megabox">
+      <div class="megabox-form-base">
+        <div class="megabox-form-wrapper">
+          <form action="#" method="post">
+            <div class="megabox-textbox">
+              <textarea name="quiz_form" placeholder="オンライン目安箱です" required="true" cols="100" rows="5"
+                class="megabox-form"></textarea>
+            </div>
+            <div class="megabox-options">
+              <select name="addressselect" required class="address">
+                <option hidden>送信先</option>
+                <option>生徒会</option>
+                <option>情報委員会</option>
+              </select>
+              <input type="submit" value="送信" class="megabox-button">
+            </div>
+          </form>
+        </div>
+      </div>
+      <label for="login" class="login">
+        <p class="login-text">Login</p>
+        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" clip-rule="evenodd" viewBox="3 3 253 252" class="loginicon">
+          <g fill="none" stroke="#96a5b3" stroke-linecap="butt" stroke-width="10">
+            <path d="M93 98c0-24 16-44 36-44s36 20 36 44-16 43-36 43-36-19-36-43Z" />
+            <path d="M13 129a116 116 0 1 1 232 1 116 116 0 0 1-232-1Z" />
+            <path d="M61 222c11-33 22-61 68-63 47-1 61 42 69 65" />
+          </g>
+        </svg>
+      </label>
+      <input type="checkbox" id="login">
+      <div id="form-basic">
+        <div class="form-wrapper">
+          <h1>Sign In</h1>
+          <form>
+            <input type="text" name="id" required="required" placeholder="ID" class="form"></input>
+            <input type="password" name="password" required="required" placeholder="Password" class="form"
+              id="pass"></input>
+            <input type="submit" class="button" name="login" value="Login"></input>
+          </form>
+        </div>
+      </div>
+      <label for="menu" class="menulabel"><span></span></label>
+      <input type="checkbox" id="menu">
+      <div class="menu-content">
+        <div class="menu-wrap">
+          <form action="M1.html" method="get" class="search-bar">
+            <input type="search" name="search" placeholder="入力" id="search-box">
+            <input type="submit" name="submit" value="検索" id="search-button">
+          </form>
+          <ul>
+            <li>
+              <a href="https://m1portal.cloudfree.jp/homework.html">課題一覧</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク2</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク3</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク4</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク5</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク6</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク7</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク8</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク9</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク10</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク11</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク12</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク13</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク14</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク15</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク16</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク17</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク18</a>
+            </li>
+            <li>
+              <a href="#">メニューリンク19</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </span>
+  </header>
+  <div class="content">
+  <div class="timetable">
+    <span class="box-title">時間割</span>
+    <img href="#" alt="No Images" class="timetableImg"></img>
+  </div>
+  <div class="news">
+    <span class="box-title">新着</span>
+    <table>
+      <tr>
+        <td>YYYY/MM/DD</td>
+        <td><a href="#" id="newcontent">No Content</a></td>
+      </tr>
+      <tr>
+        <td>YYYY/MM/DD</td>
+        <td><a href="#" id="newcontent">No Content</a></td>
+      </tr>
+      <tr>
+        <td>YYYY/MM/DD</td>
+        <td><a href="#" id="newcontent">No Content</a></td>
+      </tr>
+      <tr>
+        <td>YYYY/MM/DD</td>
+        <td><a href="#" id="newcontent">No Content</a></td>
+      </tr>
+      <tr>
+        <td>YYYY/MM/DD</td>
+        <td><a href="#" id="newcontent">No Content</a></td>
+      </tr>
+      <tr>
+        <td>YYYY/MM/DD</td>
+        <td><a href="#" id="newcontent">No Content</a></td>
+      </tr>
+    </table>
+  </div>
+  
+  <footer>
+    <table>
+      <tr>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li class="main"><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+            <li><a href="#">ページ</a></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <span>
+      <label id="formurl" for="megabox">→お問い合わせはこちら</label>
+      <p>©2023,All rights reserved 水戸第一高等学校情報委員会<br>example@gmail.com</p>
+    </span>
+  </footer>
+  </div>
+  <script>
+  
+  </script>
+</body>
+</html>
