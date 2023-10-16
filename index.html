@@ -597,6 +597,7 @@
   </div>
   <div class="news">
     <span class="box-title">新着</span>
+	 <div id = "newscontent">
     <table>
       <tr>
         <td>YYYY/MM/DD</td>
@@ -623,6 +624,7 @@
         <td><a href="#" id="newcontent">No Content</a></td>
       </tr>
     </table>
+	 </div>
   </div>
   
   <footer>
@@ -719,7 +721,62 @@
   </footer>
   </div>
   <script>
-  
+// テキストファイルの内容を読み込み、HTMLテーブルに追加する関数
+const fileName = 'news.txt';
+
+fetch(fileName)
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Failed to fetch the file');
+    }
+  })
+  .then(textContent => {
+    const tableHTML = createTableFromText(textContent);
+    const gradeDiv = document.getElementById('newscontent');
+    gradeDiv.innerHTML = tableHTML;
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+// テキストをHTMLテーブルに変換する関数
+function createTableFromText(inputText) {
+  const rows = inputText.split('\n');
+  let htmlTable = '<table>';
+
+  for (const row of rows) {
+    const cells = row.split('|');
+    htmlTable += '<tr>';
+
+    for (let cell of cells) {
+      const colspanMatches = cell.match(/"(\d+),(\d+)"/g);
+      let colspan = 1;
+      let rowspan = 1;
+
+      if (colspanMatches) {
+        const lastMatch = colspanMatches[colspanMatches.length - 1];
+        const matchParts = lastMatch.match(/"(\d+),(\d+)"/);
+        if (matchParts) {
+          colspan = parseInt(matchParts[1]);
+          rowspan = parseInt(matchParts[2]);
+          cell = cell.replace(lastMatch, '');
+        }
+      }
+
+      cell = cell
+        .replace(/&rne/g, '\n')
+        .replace(/&vtl/g, '|');
+
+      htmlTable += `<td colspan="${colspan}" rowspan="${rowspan}">${cell}</td>`;
+    }
+    htmlTable += '</tr>';
+  }
+
+  htmlTable += '</table>';
+  return htmlTable;
+}
   </script>
 </body>
 </html>
