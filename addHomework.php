@@ -10,6 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $filename = "$grade-homework.txt";
   $fileContent = file_get_contents($filename);
 
+  $homework = explode("\n", $homework);
+
+  // 置換を行う
+  $homework = implode("<br>", $homework);
+
   if ($grade === "jh1"){
     $array = ['文学国語','古典探究','数学','英語C','論理表現','化学','物理','生物基礎','地学','公民','地理探究','世界史','日本史','情報','保健','家庭科','芸術','総合'];
   } else if ($grade === "jh2"){
@@ -68,14 +73,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lines = explode("\n", $updatedText);
 
   foreach ($lines as $line) {
-      $lineNumber++;
       if (preg_match($nextpattern, $line, $matches)) {
           break; // 正規表現に一致した行を見つけたらループを終了
       }
+      $lineNumber++;
   }
 
   // 新しい行を挿入
-  array_splice($lines, $lineNumber - 1, 0, $newLine); // 直前に新しい行を挿入
+  if ($nextElement !== null){
+    array_splice($lines, $lineNumber, 0, $newLine); // 直前に新しい行を挿入
+  } else {
+    array_push($lines, $newLine);
+  }
 
   // 配列をテキストに戻す
   $newText = implode("\n", $lines);
