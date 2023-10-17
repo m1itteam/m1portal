@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   preg_match($pattern, $fileContent, $matches);
 
   // 新しい値を計算
-  $newRow = intval($matches[1]) + 1;
+  $newRow = intval($matches[2]) + 1;
 
   // 置き換える文字列
   $replacement = $subject . "\"1," . $newRow . "\"" ;
@@ -87,5 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $logFile = "log-homework.txt";
   $logEntry = "$grade,$subject,$date,$homework";
   file_put_contents($logFile, $logEntry . PHP_EOL, FILE_APPEND);
+
+  header("Location:https://m1portal.cloudfree.jp/inputhomework.html");
+	exit();
 }
 ?>
