@@ -393,28 +393,32 @@
       border-radius: 0;
       width: 10em;
     }
-    #jh1,
     #jh2,
     #jh3,
     #h1,
     #h2,
     #h3{
       display: none;
-      transition: .5s all;
+    }
+    #jh1 td:nth-of-type(1),
+    #jh2 td:nth-of-type(1),
+    #jh3 td:nth-of-type(1),
+    #h1 td:nth-of-type(1),
+    #h2 td:nth-of-type(1),
+    #h3 td:nth-of-type(1){
+      width: 5em;
     }
     .homework div table {
       margin: 0;
       padding: 0;
-      width: 100%;
+      max-width: 100%;
+      width: auto;
       color: #96a5b3;
     }
 	 .homework div table tr td{
 		padding-bottom: 1em;
+		vertical-align: top;
 	}
-    .homework div table tr td:nth-of-type(1){
-      text-align: left;
-      width: 5em;
-    }
 	 .homework div table tr td:nth-of-type(2){
       text-align: left;
       width: 7em;
