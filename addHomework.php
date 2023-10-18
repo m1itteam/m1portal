@@ -73,17 +73,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lines = explode("\n", $updatedText);
 
   foreach ($lines as $line) {
-      if (preg_match($nextpattern, $line, $matches)) {
-          break; // 正規表現に一致した行を見つけたらループを終了
-      }
-      $lineNumber++;
-  }
+    $lineNumber ++;
+    if (preg_match($pattern, $line, $matches)) {
+      $separated = explode("|", $matches[0]);
+      
+      // 配列の要素数を取得
+      $elementCount = count($elements);
 
-  // 新しい行を挿入
-  if ($nextElement !== null){
-    array_splice($lines, $lineNumber, 0, $newLine); // 直前に新しい行を挿入
-  } else {
-    array_push($lines, $newLine);
+      if ($elementCount === 1){
+        $newLine = $matches[0] . $newLine;
+
+        array_splice($lines, $lineNumber, 1, $newLine);
+      } else {
+        $matches = [];
+        $lineNumber = 0;
+        foreach ($lines as $line) {
+          if (preg_match($nextpattern, $line, $matches)) {
+            break; // 正規表現に一致した行を見つけたらループを終了
+          }
+          $lineNumber++;  
+        }  // 新しい行を挿入
+        if ($nextElement !== null){
+          array_splice($lines, $lineNumber, 0, $newLine); // 直前に新しい行を挿入
+        } else {
+          array_push($lines, $newLine);
+        }
+      }
+    }
   }
 
   // 配列をテキストに戻す
