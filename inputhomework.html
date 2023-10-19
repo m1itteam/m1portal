@@ -87,13 +87,13 @@
       transition: .5s all;
       z-index: 0;
     }
-     .megabox-form-wrapper {
+    .megabox-form-wrapper {
       background: #fafafa;
       width: 80%;
       margin-left: auto;
       margin-right: auto;
       padding: 3%;
-      margin-top: 3em;
+      margin-top: 0em;
     }
     .megabox-form {
       margin: 0;
@@ -106,14 +106,16 @@
       -moz-appearance: none;
       appearance: none;
       width: 100%;
-      min-height: 10em;
+      min-height: 8em;
     }
     .megabox-options {
       margin-left: auto;
       margin-right: auto;
+      margin-top: 1em;
       width: 80%;
       display: flex;
       justify-content: space-between;
+      overflow-x: scroll;
     }
     .megabox-button {
       border: none;
@@ -127,7 +129,10 @@
       color: #fff;
       height: 2em;
     }
-    .address {
+    #address,
+    #megaboxGrade,
+    #gradeOpen,
+    #questionOpen {
       appearance: none;
       -webkit-appearance: none;
       height: 4em;
@@ -137,7 +142,14 @@
       border-bottom: 1px solid #000;
       margin-bottom: 0;
       border-radius: 0;
-      width: 10em;
+      width: 7em;
+    }
+    .megabox-options div{
+      position: relative;
+    }
+    .megabox-options label{
+      position: absolute;
+      font-size: .5em;
     }
     form {
       padding: 0 1.5em;
@@ -492,16 +504,44 @@
       <input type="checkbox" id="megabox">
       <div class="megabox-form-base">
         <div class="megabox-form-wrapper">
-          <form action="#" method="post">
+          <form action="addMegabox.php" method="post">
             <div class="megabox-textbox">
-              <textarea name="megabox_form" placeholder="オンライン目安箱です" required="true" cols="100" rows="5"class="megabox-form"></textarea>
+              <textarea name="megaboxForm" placeholder="オンライン目安箱です" required="required" cols="100" rows="5"class="megabox-form"></textarea>
             </div>
             <div class="megabox-options">
-              <select name="addressselect" required class="address">
-                <option hidden>送信先</option>
-                <option>生徒会</option>
-                <option>情報委員会</option>
+              <div>
+              <label for="address">送り先</label>
+              <select name="addressSelect" required="required" id="address">
+                <option value="SC">生徒会</option>
+                <option value="IT">情報委員会</option>
               </select>
+              </div>
+              <div>
+              <label for="megaboxGrade">学年</label>
+              <select id = "megaboxGrade" required="required" name = "megaboxGradesSlect">
+                <option>中学一年</option>
+                <option>中学二年</option>
+                <option>中学三年</option>
+                <option>高校一年</option>
+                <option>高校二年</option>
+                <option>高校三年</option>
+                <option>教師</option>
+              </select>
+              </div>
+              <div>
+              <label for="gradeOpen">学年公開</label>
+              <select id = "gradeOpen" required="required" name="gradeOpenSelect">
+                <option>可</option>
+                <option>不可</option>
+              </select>
+              </div>
+              <div>
+              <label for="questionOpen">質問公開</label>
+              <select id = "questionOpen" required="required" name="questionOpenSelect">
+                <option>可</option>
+                <option>不可</option>
+              </select>
+              </div>
               <input type="submit" value="送信" class="megabox-button">
             </div>
           </form>
@@ -542,8 +582,8 @@
             </li>
             <li>
               <a href="https://m1portal.cloudfree.jp/inputhomework.html">課題追加</a>
-	    </li>
-	    <li>
+            </li>
+            <li>
               <a href="https://m1portal.cloudfree.jp/inputnotion.html">お知らせ追加</a>
             </li>
           </ul>
@@ -619,7 +659,7 @@
         </div>
         <div class="dateWrapper">
           <label for="date" class="datelabel">期限</label>
-	        <input type = "date" name="date" id = "date">
+	        <input type = "date" name="date" id = "date" required>
         </div>
       </div>
 	  <textarea name="homework_form" placeholder="課題内容" required="true"id="homework-form"></textarea>
