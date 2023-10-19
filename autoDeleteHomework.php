@@ -24,7 +24,13 @@ foreach ($grade as $element) {
             } else if ($cellsCount == 3) {
                 $cells = explode("|", $matches[0]);
                 $firstCell = $cells[0];
-                array_splice($lines, $lineNumber, 0, $firstCell);
+                array_splice($lines, $lineNumber, 1, $firstCell);
+                $nextLine = $lines[$lineNumber + 1];
+                $nextCellsCount = count(explode("|", $nextLine));
+                if ($nextCellsCount == 2){
+                  $marged = $lines[$lineNumber] . "|" . $nextLine;
+                  array_splice($lines, $lineNumber, 2, $marged);
+                }
             }
         }
     }
