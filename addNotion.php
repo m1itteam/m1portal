@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $lines = explode("\n", $fileContent)
 
-  $newLine = date("Y-m-d h:m:s") . "
+  $newLine = date("Y-m-d h:i:s") . "
  " . $notion;
 
   array_pop($lines);
@@ -30,6 +30,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $logFile = "log-notion.txt";
   $logEntry = "$newLine";
   file_put_contents($logFile, $logEntry . PHP_EOL, FILE_APPEND);
+
+  $newsFileName = "$news.txt";
+  $newsFileContent = filegetcontents($newsFileName);
+
+  $newsLines = explode($newsFileContent);
+
+  $now = date("Y-m-d h:i");
+
+  $newsNewLine = $now . "|for All" . "|お知らせが追加されました";
+
+  array_pop($newsLines);
+
+  array_unshift($newsLines, $newLine);
+
+  $newsNewText = implode("\n", $newsLines);
+
+  file_put_contents($newsFileName, $newsNewText);
 
   header("Location:https://m1portal.cloudfree.jp/inputnotion.html");
 	exit();
