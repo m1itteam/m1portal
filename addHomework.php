@@ -113,6 +113,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $logEntry = "$grade,$subject,$date,$homework";
   file_put_contents($logFile, $logEntry . PHP_EOL, FILE_APPEND);
 
+  $newsFileName = "$news.txt";
+  $newsFileContent = filegetcontents($newsFileName);
+
+  $newsLines = explode($newsFileContent);
+
+  $now = date("Y-m-d h:i");
+
+  $grades = array(
+    "jh1" => "中学一年生",
+    "jh2" => "中学二年生",
+    "jh3" => "中学三年生",
+    "h1"  => "高校一年生",
+    "h2"  => "高校二年生",
+    "h3"  => "高校三年生"
+  );
+
+  if (isset($grades[$grade])) {
+    $grade = $grades[$grade];
+  }
+
+  $newsNewLine = $now . "|for" . $grade . "|<a href='https://m1portal.cloudfree.jp/homework.html'>課題が追加されました</a>";
+
+  array_pop($newsLines);
+
+  array_unshift($newsLines, $newLine);
+
+  $newsNewText = implode("\n", $newsLines);
+
+  file_put_contents($newsFileName, $newsNewText);
+
   header("Location:https://m1portal.cloudfree.jp/inputhomework.html");
 	exit();
 }
