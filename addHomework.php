@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $separated = explode("|", $matches[0]);
       
       // 配列の要素数を取得
-      $elementCount = count($elements);
+      $elementCount = count($separated);
 
       if ($elementCount === 1){
         $newLine = $matches[0] . $newLine;
@@ -100,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       }
     }
+    break;
   }
 
   // 配列をテキストに戻す
@@ -113,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $logEntry = "$grade,$subject,$date,$homework";
   file_put_contents($logFile, $logEntry . PHP_EOL, FILE_APPEND);
 
-  $newsFileName = "$news.txt";
+  $newsFileName = "news.txt";
   $newsFileContent = file_get_contents($newsFileName);
 
   $newsLines = explode("\n",$newsFileContent);
