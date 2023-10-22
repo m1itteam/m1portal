@@ -114,9 +114,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   file_put_contents($logFile, $logEntry . PHP_EOL, FILE_APPEND);
 
   $newsFileName = "$news.txt";
-  $newsFileContent = filegetcontents($newsFileName);
+  $newsFileContent = file_get_contents($newsFileName);
 
-  $newsLines = explode($newsFileContent);
+  $newsLines = explode("\n",$newsFileContent);
 
   $now = date("Y-m-d h:i");
 
