@@ -57,9 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           $parentLineNumber--;
         }
         $parentCells = explode("|",$homework[$parentLineNumber]);
-        preg_match($pattern, $sparentCells[0], $matches);
+        preg_match($pattern, $parentCells[0], $matches);
         $rowNumber = $matches[3] - 1;
-        $newCell = $matches[1] . '"' . $matches[2] . $rowNumber . '"';
+        $newCell = $matches[1] . '"' . $matches[2] . "," . $rowNumber . '"';
         array_splice($parentCells, 0, 1, $newCell);
         $newLine = implode("|",$parentCells);
         array_splice($homework, $parentLineNumber, 1, $newLine);
@@ -85,5 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   } else {
     echo json_encode(["error" => "JSONデータの受信に失敗しました"]);
   }
+  header("Location:https://m1portal.cloudfree.jp/inputhomework.html");
+  exit();
 }
 ?>
